@@ -1,4 +1,5 @@
 # Proyecto-LDP-Juego-Ahorcado
+Versión de Python: 3.13.3
 
 El programa se ha realizado en el lenguaje de programación Python mediante el editorde código Visual Studio Code en la plataforma Windows 10.
 
