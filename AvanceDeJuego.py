@@ -6,40 +6,45 @@ def main():
         opcionEscogida = menuJuego()
         if opcionEscogida == "1":
             limpiarConsola()
-            
+            # Muestra menu de los modos de juego
             modoEscogido = menu_modos_juego()
-            
+            # Ejecucion para el modo un jugador
             if modoEscogido == "1":
                 limpiarConsola()
                 contador = 0
+                # Solicita las rondas a jugar, el nombre del jugador y se ejecuta un bucle en base a esas rondas
                 rondas = cantidad_rondas()
                 jugador_1 = pedir_nombre("1")
                 while contador < rondas:
                     print("RONDA " + str(contador + 1) + "\n\n")
                     terminar = logica_un_jugador(jugador_1)
                     print("\n\n")
+                    # Si se obtiene un valorde retorno, se termina la partida (todas las rondas)
                     if terminar != 1:
                         contador += 1
                     else:
                         contador = rondas
-
+            # Ejecucion para el modo vs computadora
             elif modoEscogido == "2":
                 limpiarConsola()
                 contador = 0
+                # Solicita las rondas a jugar, el nombre del jugador y se ejecuta un bucle en base a esas rondas
                 rondas = cantidad_rondas()
                 jugador_1 = pedir_nombre("1")
                 while contador < rondas:
                     print("RONDA " + str(contador + 1) + "\n\n")
                     terminar = logica_vs_computadora(jugador_1)
                     print("\n\n")
+                    # Si se obtiene un valorde retorno, se termina la partida (todas las rondas)
                     if terminar != 1:
                         contador += 1
                     else:
                         contador = rondas
-
+            # Ejecucion para el modo multijugador
             elif modoEscogido == "3":
                 limpiarConsola()
                 contador = 0
+                # Solicita las rondas a jugar, el nombre de los jugadores y se ejecuta un bucle en base a esas rondas
                 rondas = cantidad_rondas()
                 jugador_1 = pedir_nombre("1")
                 jugador_2 = pedir_nombre("2")
@@ -47,16 +52,17 @@ def main():
                     print("RONDA " + str(contador + 1) + "\n\n")
                     terminar = logica_multijugador(jugador_1, jugador_2)
                     print("\n\n")
+                    # Si se obtiene un valorde retorno, se termina la partida (todas las rondas)
                     if terminar != 1:
                         contador += 1
                     else:
                         contador = rondas
-
+            # Ejecucion para mostrar estadisticas
             elif modoEscogido == "4":
                 limpiarConsola()
                 imprimir_estadisticas()
                 print("\n")
-
+            # Sale del menu modos de juego
             elif modoEscogido == "5":
                 continue
                 
@@ -153,6 +159,7 @@ def menu_modos_juego():
             print("Opcion invalida, intente nuevamente")
     return opcion
 
+# Obtiene el numero de rondas
 def cantidad_rondas():
     while True:
         try:
@@ -163,20 +170,26 @@ def cantidad_rondas():
             limpiarConsola()
             print("Ingrese un caracter numerico entero")
     return numero_rondas
-    
+
+# Pide nombre del jugador
 def pedir_nombre(numero):
     return input("Ingrese nombre del jugador " + numero + "\n")
 
+# Actualiza las estadisticas usando listas de diccionarios, tiene como parametro el nombre y resultado del jugador
 def actualizar_estadisticas(jugador, resultado):
+    # Obtiene posicion en la lista del jugador con el nombre de existir en la lista
     posicion = [iteracion for iteracion, diccionario in enumerate(lista_jugadores) if diccionario['Nombre'] == jugador]
+    # Si es nuevo, le añade un elemento con el nombre y resultado del jugador
     if posicion == []:
         if resultado == 'Victorias':
             lista_jugadores.append({'Nombre': jugador, 'Victorias': 1, 'Derrotas': 0})
         else:
             lista_jugadores.append({'Nombre': jugador, 'Victorias': 0, 'Derrotas': 1})
+    # Si no es nuevo, se suma en uno a la estadistica del resultado obtenido
     else:
         lista_jugadores[posicion[0]][resultado] += 1
 
+# Metodo para imprimir la listade jugadores en un formato especifico
 def imprimir_estadisticas():
     print("ESTADISTICAS DE LOS JUGADORES\n")
     if not lista_jugadores == []:
@@ -227,13 +240,8 @@ def logica_un_jugador(nombre_jugador):
             actualizar_estadisticas(nombre_jugador, 'Victorias')
             break
         # Se obtiene la letra que el jugador cree correcta
-        while True:
-            letra_Ingresada = input("Ingresa una letra: \n")
-            if letra_Ingresada.isalpha() and letra_Ingresada.isascii:
-                letra_Ingresada = letra_Ingresada.upper()
-                break
-            else:
-                print("Caracter(es )no valido(s), por favor intente con otra letra")
+        letra_Ingresada = input("Ingresa una letra: \n")
+        letra_Ingresada = letra_Ingresada.upper()
         # Si el jugador ya no quiere seguir, si escribe "exit" se acaba el juego
         if letra_Ingresada == "EXIT":
             limpiarConsola()
@@ -267,7 +275,7 @@ def logica_un_jugador(nombre_jugador):
 def logica_vs_computadora(nombre_jugador):
     # Establece cuantas veces puede fallar el jugador
     fallas = 15
-    # Escoge la palabra a adivinar
+    # Ingresa la palabra a adivinar y verifica que los caracteres solo sean letras
     while True:
         palabra = input("¿Cuál será la palabra a adivinar?:\n")
         if palabra.isalpha() and palabra.isascii:
@@ -299,8 +307,9 @@ def logica_vs_computadora(nombre_jugador):
         while True:
             #Pregunta si la letra mostrada esta en la palabra a adivinar
             respuesta = input("¿La letra esta en la palabra?: " + letra + " (S/N)\n")
+            respuesa = respuesta.upper()
             #Si el jugador lo desea, puede terminar esta ronda abruptamente
-            if respuesta == "exit":
+            if respuesta == "EXIT":
                 limpiarConsola()
                 print("-Partida terminada-")
                 return 1
@@ -316,7 +325,7 @@ def logica_vs_computadora(nombre_jugador):
                 limpiarConsola()
                 # Si la computadora ya alcanzo el numero maximo de fallas, se le indica al jugador que gano y la palabra que se debia adivinar
                 if fallas <= 0:
-                    print("Intentos agotados, ganaste " + nombre_jugador)
+                    print("Intentos agotados para la computadora, ganaste " + nombre_jugador)
                     print("La palabra era: " + palabra)
                     actualizar_estadisticas(nombre_jugador, 'Victorias')
                 # Si todavia no alcanza el numero maximo de fallas, se le indica que fallo y continua el juego
@@ -352,9 +361,17 @@ def logica_multijugador(jugador_1, jugador_2):
             actualizar_estadisticas(jugador_1, 'Derrotas')
             actualizar_estadisticas(jugador_2, 'Victorias')
             break
-        #Solicita al jugador 2 una letra
-        letra = input(jugador_2 + " ingrese una letra:\n")
-        #Si el jugador lo desea, puede terminar esta ronda abruptamente
+        #Solicita al jugador 2 una letra y verifica que sea una letra
+        while True:
+            letra = input(jugador_2 + " ingrese una letra:\n")
+            if letra.isalpha() and letra.isascii:
+                letra = letra.upper()
+                limpiarConsola()
+                break
+            else:
+                print("Caracteres no validos, por favor intente otra vez")
+        
+        #Si el jugador 2 lo desea, puede terminar esta ronda abruptamente
         if letra == "EXIT":
             limpiarConsola()
             print("-Partida terminada-")
@@ -362,10 +379,12 @@ def logica_multijugador(jugador_1, jugador_2):
         
         #Inicia un bucle para evitar caidas por ingreso de opcion invalida
         while True:
-            #Pregunta si la letra mostrada esta en la palabra a adivinar
+        #Pregunta si la letra mostrada esta en la palabra a adivinar
             respuesta = input("" + jugador_1 + ", ¿la letra esta en la palabra?: (S/N)\n")
-            #Si el jugador lo desea, puede terminar esta ronda abruptamente
-            if respuesta == "exit":
+            respuesta = respuesta.upper()
+            
+            #Si el jugador 1 lo desea, puede terminar esta ronda abruptamente
+            if respuesta == "EXIT":
                 limpiarConsola()
                 print("-Partida terminada-")
                 return 1
