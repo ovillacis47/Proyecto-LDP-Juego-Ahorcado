@@ -7,64 +7,65 @@ def main():
         if opcionEscogida == "1":
             limpiarConsola()
             # Muestra menu de los modos de juego
-            modoEscogido = menu_modos_juego()
-            # Ejecucion para el modo un jugador
-            if modoEscogido == "1":
-                limpiarConsola()
-                contador = 0
-                # Solicita las rondas a jugar, el nombre del jugador y se ejecuta un bucle en base a esas rondas
-                rondas = cantidad_rondas()
-                jugador_1 = pedir_nombre("1")
-                while contador < rondas:
-                    print("RONDA " + str(contador + 1) + "\n\n")
-                    terminar = logica_un_jugador(jugador_1)
-                    print("\n\n")
-                    # Si se obtiene un valorde retorno, se termina la partida (todas las rondas)
-                    if terminar != 1:
-                        contador += 1
-                    else:
-                        contador = rondas
-            # Ejecucion para el modo vs computadora
-            elif modoEscogido == "2":
-                limpiarConsola()
-                contador = 0
-                # Solicita las rondas a jugar, el nombre del jugador y se ejecuta un bucle en base a esas rondas
-                rondas = cantidad_rondas()
-                jugador_1 = pedir_nombre("1")
-                while contador < rondas:
-                    print("RONDA " + str(contador + 1) + "\n\n")
-                    terminar = logica_vs_computadora(jugador_1)
-                    print("\n\n")
-                    # Si se obtiene un valorde retorno, se termina la partida (todas las rondas)
-                    if terminar != 1:
-                        contador += 1
-                    else:
-                        contador = rondas
-            # Ejecucion para el modo multijugador
-            elif modoEscogido == "3":
-                limpiarConsola()
-                contador = 0
-                # Solicita las rondas a jugar, el nombre de los jugadores y se ejecuta un bucle en base a esas rondas
-                rondas = cantidad_rondas()
-                jugador_1 = pedir_nombre("1")
-                jugador_2 = pedir_nombre("2")
-                while contador < rondas:
-                    print("RONDA " + str(contador + 1) + "\n\n")
-                    terminar = logica_multijugador(jugador_1, jugador_2)
-                    print("\n\n")
-                    # Si se obtiene un valorde retorno, se termina la partida (todas las rondas)
-                    if terminar != 1:
-                        contador += 1
-                    else:
-                        contador = rondas
-            # Ejecucion para mostrar estadisticas
-            elif modoEscogido == "4":
-                limpiarConsola()
-                imprimir_estadisticas()
-                print("\n")
-            # Sale del menu modos de juego
-            elif modoEscogido == "5":
-                continue
+            while True:
+                modoEscogido = menu_modos_juego()
+                # Ejecucion para el modo un jugador
+                if modoEscogido == "1":
+                    limpiarConsola()
+                    contador = 0
+                    # Solicita las rondas a jugar, el nombre del jugador y se ejecuta un bucle en base a esas rondas
+                    rondas = cantidad_rondas()
+                    jugador_1 = pedir_nombre("1")
+                    while contador < rondas:
+                        print("RONDA " + str(contador + 1) + "\n\n")
+                        terminar = logica_un_jugador(jugador_1)
+                        print("\n\n")
+                        # Si se obtiene un valorde retorno, se termina la partida (todas las rondas)
+                        if terminar != 1:
+                            contador += 1
+                        else:
+                            contador = rondas
+                # Ejecucion para el modo vs computadora
+                elif modoEscogido == "2":
+                    limpiarConsola()
+                    contador = 0
+                    # Solicita las rondas a jugar, el nombre del jugador y se ejecuta un bucle en base a esas rondas
+                    rondas = cantidad_rondas()
+                    jugador_1 = pedir_nombre("1")
+                    while contador < rondas:
+                        print("RONDA " + str(contador + 1) + "\n\n")
+                        terminar = logica_vs_computadora(jugador_1)
+                        print("\n\n")
+                        # Si se obtiene un valorde retorno, se termina la partida (todas las rondas)
+                        if terminar != 1:
+                            contador += 1
+                        else:
+                            contador = rondas
+                # Ejecucion para el modo multijugador
+                elif modoEscogido == "3":
+                    limpiarConsola()
+                    contador = 0
+                    # Solicita las rondas a jugar, el nombre de los jugadores y se ejecuta un bucle en base a esas rondas
+                    rondas = cantidad_rondas()
+                    jugador_1 = pedir_nombre("1")
+                    jugador_2 = pedir_nombre("2")
+                    while contador < rondas:
+                        print("RONDA " + str(contador + 1) + "\n\n")
+                        terminar = logica_multijugador(jugador_1, jugador_2)
+                        print("\n\n")
+                        # Si se obtiene un valorde retorno, se termina la partida (todas las rondas)
+                        if terminar != 1:
+                            contador += 1
+                        else:
+                            contador = rondas
+                # Ejecucion para mostrar estadisticas
+                elif modoEscogido == "4":
+                    limpiarConsola()
+                    imprimir_estadisticas()
+                    print("\n")
+                # Sale del menu modos de juego
+                elif modoEscogido == "5":
+                    break
                 
         elif opcionEscogida == "2":
             # Muestra las instrucciones del juego
