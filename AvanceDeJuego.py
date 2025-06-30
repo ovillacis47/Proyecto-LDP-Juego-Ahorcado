@@ -251,6 +251,7 @@ def logica_un_jugador(nombre_jugador):
         # Si el jugador cree que ya ha adivinado la palabra, puede ingresarla para ganar automaticamente
         if letra_Ingresada == palabra:
             print("Adivinaste la palabra, felicidades, GANASTE!\n")
+            actualizar_estadisticas(nombre_jugador, 'Victorias')
             break
         # Si la letra ya estaba entre las letras mostradas, no cuenta como falla ni se ingresa a la palabra porque, pues, ya estaba
         if letra_Ingresada in palabraUsada:
@@ -399,7 +400,7 @@ def logica_multijugador(jugador_1, jugador_2):
             elif respuesta == "N":
                 limpiarConsola()
                 fallas -= 1
-                # Si la computadora ya alcanzo el numero maximo de fallas, se le indica al jugador que gano y la palabra que se debia adivinar
+                # Si se llego al maximo de fallas, se le indica al jugador 2 que perdio y al jugador 1 que gano
                 if fallas <= 0:
                     print("Intentos agotados \nPerdiste " + jugador_2 + "\nGanaste " + jugador_1)
                     print("La palabra era: " + palabra)
